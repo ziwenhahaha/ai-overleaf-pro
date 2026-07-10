@@ -62,6 +62,13 @@ const GitSyncExportModal = ({
 
   const { isLoading, error, setError, runAsync } = useAsync<void>()
 
+  // Static mapping of the error keys, for i18n.
+  const GITHUB_ERROR_MESSAGES: Record<string, string> = {
+    github_validation_check: t('github_validation_check'),
+    github_validation_check_auth: t('github_validation_check_auth'),
+    github_validation_name_exists: t('github_validation_name_exists'),
+  }
+
   const createRepo = () => {
     const isPublic = visibility === 'public'
     const org = selectedOwner === userAndOrgs?.user ? undefined : selectedOwner
@@ -77,8 +84,10 @@ const GitSyncExportModal = ({
       .then(() => setModalStatus('loading'))
       .catch(err => {
         debugConsole.error(err?.data?.message || err?.message || err)
-        if (!err?.data?.key) setError(t('something_went_wrong_server'))
-        else setError(t(err.data.key))
+        setError(
+          GITHUB_ERROR_MESSAGES[err?.data?.key] ??
+            t('something_went_wrong_server')
+        )
       })
   }
 
