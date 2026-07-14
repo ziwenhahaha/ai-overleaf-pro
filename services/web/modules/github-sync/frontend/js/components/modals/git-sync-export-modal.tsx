@@ -65,8 +65,6 @@ const GitSyncExportModal = ({
   // Static mapping of the error keys, for i18n.
   const GITHUB_ERROR_MESSAGES: Record<string, string> = {
     github_validation_check: t('github_validation_check'),
-    github_validation_check_auth: t('github_validation_check_auth'),
-    github_validation_name_exists: t('github_validation_name_exists'),
   }
 
   const createRepo = () => {
