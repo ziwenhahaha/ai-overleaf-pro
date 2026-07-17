@@ -48,7 +48,7 @@ Last but not least, Overleaf Pro is open-source, free to use and modify. You can
 
 ## Installation
 
-We have detailed installation instructions on the [Documents](https://overleaf-pro.ayaka.space/docs) page. We highly recommend installing Overleaf Pro using the [ayaka-notes/Toolkit](https://github.com/ayaka-notes/toolkit/).
+We have detailed installation instructions on the [Documents](https://overleaf-pro.ayaka.space/) page. We highly recommend installing Overleaf Pro using the [ayaka-notes/Toolkit](https://github.com/ayaka-notes/toolkit/).
 
 ## Upgrading
 
