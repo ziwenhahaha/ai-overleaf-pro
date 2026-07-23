@@ -36,7 +36,7 @@ Overleaf Pro is an enhanced version of Overleaf with almost all features and cap
 - Template System (With Template Gallery)
 - Track Changes (With Review and Comment Panel)
 - Full Project History(With Restore and Download)
-- Symbol Palette (From [Overleaf SaaS](https://docs.overleaf.com/writing-and-editing/inserting-symbols) feature)
+- Symbol Palette (Features in Server Pro/SaaS Platform)
 - ARM Support(x86_64/arm64 on Docker)
 
 Last but not least, Overleaf Pro is open-source, free to use and modify. You can self-host it and contribute to the development of Overleaf Pro. For more details, please check [Developer Documentation](https://overleaf-pro.ayaka.space/dev) page.
@@ -62,6 +62,12 @@ Please see the [CONTRIBUTING](CONTRIBUTING.md) file for information on contribut
 
 - [The Overleaf Team](https://www.overleaf.com/about)
 - [Features and Copyright](https://overleaf-pro.ayaka.space/on-premises/readme/features-and-copyright)
+
+## Translations
+
+Generally, we use claude.ai to translate the English text into other languages. If you find any errors in the translations, please submit a pull request to fix them. Please only modify relevant files in the `services/web/locales/locales_patches` folder.
+
+Files under `services/web/locales/` are overleaf official translation files. Please do not modify them directly.
 
 ## License
 
