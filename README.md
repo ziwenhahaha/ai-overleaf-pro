@@ -54,6 +54,12 @@ We have detailed installation instructions on the [Documents](https://overleaf-p
 
 If you are upgrading from a previous version of Overleaf Pro, please see the [Releases page](https://github.com/ayaka-notes/overleaf-pro/releases) for the changes in each version between your current version and the one you are upgrading to.
 
+## Translations
+
+We welcome contributions to translations of Overleaf Pro. Generally, we use claude.ai to translate the English text into other languages. If you find any errors in the translations, please submit a pull request to fix them. Please only modify relevant files in the `services/web/locales/locales_patches` folder.
+
+Files under `services/web/locales/` are overleaf official translation files. Please do not modify them directly.
+
 ## Contributing
 
 Please see the [CONTRIBUTING](CONTRIBUTING.md) file for information on contributing to the development of Overleaf.
@@ -62,12 +68,6 @@ Please see the [CONTRIBUTING](CONTRIBUTING.md) file for information on contribut
 
 - [The Overleaf Team](https://www.overleaf.com/about)
 - [Features and Copyright](https://overleaf-pro.ayaka.space/on-premises/readme/features-and-copyright)
-
-## Translations
-
-Generally, we use claude.ai to translate the English text into other languages. If you find any errors in the translations, please submit a pull request to fix them. Please only modify relevant files in the `services/web/locales/locales_patches` folder.
-
-Files under `services/web/locales/` are overleaf official translation files. Please do not modify them directly.
 
 ## License
 
