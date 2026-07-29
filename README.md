@@ -12,11 +12,11 @@
 
 <img src="doc/screenshot-pro.png" alt="A screenshot of a project being edited in Overleaf Community Edition">
 <p align="center">
-  Figure 1: A screenshot of a project being edited in Overleaf Pro Edition.
+  Figure 1: A screenshot of a project being edited in Ayakaleaf Pro Edition.
 </p>
 
-## Overleaf Pro Edition
-Overleaf Pro is an enhanced version of Overleaf with almost all features and capabilities. For details, please check [Overleaf Pro](https://overleaf-pro.ayaka.space) page. Features in Overleaf Pro include: 
+## Ayakaleaf Pro Edition
+Ayakaleaf Pro is an enhanced version of Overleaf with almost all features and capabilities. For details, please check [Ayakaleaf Pro](https://overleaf-pro.ayaka.space) page. Features in Ayakaleaf Pro include: 
 
 - Pandoc Import/Export (Features in SaaS Platform)
 - Python Script Runner (Features in SaaS Platform)
@@ -35,24 +35,24 @@ Overleaf Pro is an enhanced version of Overleaf with almost all features and cap
 - Symbol Palette (Features in Server Pro/SaaS Platform)
 - ARM Support(x86_64/arm64 on Docker)
 
-Last but not least, Overleaf Pro is open-source, free to use and modify. You can self-host it and contribute to the development of Overleaf Pro. For more details, please check [Developer Documentation](https://overleaf-pro.ayaka.space/dev) page.
+Last but not least, Ayakaleaf Pro is open-source, free to use and modify. You can self-host it and contribute to the development of Ayakaleaf Pro. For more details, please check [Developer Documentation](https://overleaf-pro.ayaka.space/dev) page.
 
 > [!NOTE]
-> Note: Overleaf Pro is not affiliated with Overleaf, Inc. or its parent company, Digital Science. It is also *not Server Pro* Edition, which is a commercial product offered by Overleaf, Inc.
+> Note: Ayakaleaf Pro is not affiliated with Overleaf, Inc. or its parent company, Digital Science. It is also *not Server Pro* Edition, which is a commercial product offered by Overleaf, Inc.
 > 
-> Overleaf Pro is an independent project developed and maintained by the [ayaka-notes](https://github.com/ayaka-notes).
+> Ayakaleaf Pro is an independent project developed and maintained by the [ayaka-notes](https://github.com/ayaka-notes).
 
 ## Installation
 
-We have detailed installation instructions on the [Documents](https://overleaf-pro.ayaka.space/) page. We highly recommend installing Overleaf Pro using the [ayaka-notes/Toolkit](https://github.com/ayaka-notes/toolkit/).
+We have detailed installation instructions on the [Documents](https://overleaf-pro.ayaka.space/) page. We highly recommend installing Ayakaleaf Pro using the [ayaka-notes/Toolkit](https://github.com/ayaka-notes/toolkit/).
 
 ## Upgrading
 
-If you are upgrading from a previous version of Overleaf Pro, please see the [Releases page](https://github.com/ayaka-notes/overleaf-pro/releases) for the changes in each version between your current version and the one you are upgrading to.
+If you are upgrading from a previous version of Ayakaleaf Pro, please see the [Releases page](https://github.com/ayaka-notes/overleaf-pro/releases) for the changes in each version between your current version and the one you are upgrading to.
 
 ## Translations
 
-We welcome contributions to translations of Overleaf Pro. Generally, we use claude.ai to translate the English text into other languages. If you find any errors in the translations, please submit a pull request to fix them. Please only modify relevant files in the `services/web/locales/locales_patches` folder.
+We welcome contributions to translations of Ayakaleaf Pro. Generally, we use claude.ai to translate the English text into other languages. If you find any errors in the translations, please submit a pull request to fix them. Please only modify relevant files in the `services/web/locales/locales_patches` folder.
 
 Files under `services/web/locales/` are overleaf official translation files. Please do not modify them directly.
 
