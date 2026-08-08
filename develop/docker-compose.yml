@@ -22,7 +22,7 @@ services:
     build:
       context: ..
       dockerfile: services/clsi/Dockerfile
-      target: with-texlive
+    # target: with-texlive
     env_file:
       - dev.env
     environment:
