@@ -58,6 +58,10 @@ async function _refreshAccessToken(refreshToken) {
   const body = new URLSearchParams({
     grant_type: 'refresh_token',
     refresh_token: refreshToken,
+    // Mendeley's docs show redirect_uri in the refresh example, even though
+    // RFC 6749 §6 does not ask for it and the endpoint accepts the request
+    // without it. Sent to match the documented form.
+    redirect_uri: Settings.mendeley?.callbackURL,
   })
   return _requestToken(body)
 }
