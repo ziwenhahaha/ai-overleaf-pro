@@ -10,7 +10,9 @@ import {
   fetchStringWithResponse,
 } from '@overleaf/fetch-utils'
 import { User } from '../../../../app/src/models/User.mjs'
-import { AccessTokenEncryptor } from './AccessTokenEncryptorHelper.mjs'
+import { createAccessTokenEncryptor } from './AccessTokenEncryptorHelper.mjs'
+
+const AccessTokenEncryptor = createAccessTokenEncryptor('zotero')
 
 const ZOTERO_API_URL = 'https://api.zotero.org'
 const ZOTERO_OAUTH_REQUEST_URL = 'https://www.zotero.org/oauth/request'

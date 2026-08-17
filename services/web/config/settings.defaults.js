@@ -1028,7 +1028,11 @@ module.exports = {
     createFileModes: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/zotero-create-file'
+        '../modules/tpr-webmodule/frontend/js/components/create-file-mode-zotero'
+      ),
+      Path.resolve(
+        __dirname,
+        '../modules/tpr-webmodule/frontend/js/components/create-file-mode-mendeley'
       ),
     ],
     devToolbar: [],
@@ -1037,25 +1041,25 @@ module.exports = {
     tprFileViewInfo: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/tpr-file-view-info'
+        '../modules/tpr-webmodule/frontend/js/components/tpr-file-view-info'
       ),
     ],
     tprFileViewRefreshError: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/tpr-file-view-refresh-error'
+        '../modules/tpr-webmodule/frontend/js/components/tpr-file-view-refresh-error'
       ),
     ],
     tprFileViewRefreshButton: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/tpr-file-view-refresh-button'
+        '../modules/tpr-webmodule/frontend/js/components/tpr-file-view-refresh-button'
       ),
     ],
     tprFileViewNotOriginalImporter: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/tpr-file-view-not-original-importer'
+        '../modules/tpr-webmodule/frontend/js/components/tpr-file-view-not-original-importer'
       ),
     ],
     contactUsModal: [],
@@ -1102,7 +1106,11 @@ module.exports = {
     referenceLinkingWidgets: [
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/zotero-widget'
+        '../modules/tpr-webmodule/frontend/js/components/zotero-widget'
+      ),
+      Path.resolve(
+        __dirname,
+        '../modules/tpr-webmodule/frontend/js/components/mendeley-widget'
       ),
     ],
     importProjectFromGithubModalWrapper: [
@@ -1202,7 +1210,11 @@ module.exports = {
       ),
       Path.resolve(
         __dirname,
-        '../modules/zotero/frontend/js/components/zotero-integration-card.tsx'
+        '../modules/tpr-webmodule/frontend/js/components/zotero-integration-card.tsx'
+      ),
+      Path.resolve(
+        __dirname,
+        '../modules/tpr-webmodule/frontend/js/components/mendeley-integration-card.tsx'
       ),
     ],
     referenceSearchSetting: [],
@@ -1240,7 +1252,7 @@ module.exports = {
     'reference-picker',
     'git-bridge',
     'github-sync',
-    'zotero',
+    'tpr-webmodule',
     'instance-features'
   ],
   viewIncludes: {},

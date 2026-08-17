@@ -1,26 +1,33 @@
 import { useTranslation } from 'react-i18next'
 import { formatTime, relativeDate } from '@/features/utils/format-date'
 import { LinkedFileIcon } from '@/features/file-view/components/file-view-icons'
-import { hasProvider } from '@/features/file-view/types/binary-file'
-import type { LinkedFile, LinkedFileData } from '@/features/file-view/types/binary-file'
+import type {
+  LinkedFile,
+  LinkedFileData,
+} from '@/features/file-view/types/binary-file'
 import useInstanceFeatures from '@modules/instance-features/frontend/js/use-instance-features'
+import { getReferenceProvider } from '../reference-providers'
 
 type TPRFileViewInfoProps = {
   file: LinkedFile<keyof LinkedFileData>
 }
 
 /**
- * Shows "Imported from Zotero at <date>" in the file view header
- * when viewing a Zotero-linked .bib file.
+ * Shows "Imported from <provider> at <date>" in the file view header when
+ * viewing a file linked from a reference manager.
  * Registered via overleafModuleImports.tprFileViewInfo.
  */
 export function TPRFileViewInfo({ file }: TPRFileViewInfoProps) {
   const { t } = useTranslation()
-  const { zotero } = useInstanceFeatures()
+  const features = useInstanceFeatures()
 
-  if (!zotero || !hasProvider(file, 'zotero')) return null
+  const provider = getReferenceProvider(file)
+  if (!provider || !features[provider.id]) {
+    return null
+  }
 
-  const importedAt = (file.linkedFileData as any)?.importedAt || file.created
+  const importedAt =
+    (file.linkedFileData as any)?.importedAt || file.created
   const formattedDate = formatTime(importedAt)
   const relative = relativeDate(importedAt)
 
@@ -28,7 +35,7 @@ export function TPRFileViewInfo({ file }: TPRFileViewInfoProps) {
     <p>
       <LinkedFileIcon />
       &nbsp;
-      {t('imported_from_zotero_at_date', {
+      {t(provider.i18n.importedAtDate, {
         formattedDate,
         relativeDate: relative,
       })}
