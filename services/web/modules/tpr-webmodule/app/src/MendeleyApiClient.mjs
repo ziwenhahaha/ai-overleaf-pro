@@ -88,7 +88,9 @@ async function _requestToken(body) {
       expiresAt: Date.now() + (data.expires_in || 3600) * 1000,
     }
   } catch (err) {
-    if (err.response?.status === 401) {
+    // 400 covers invalid_grant (expired/revoked token), per RFC 6749 §5.2.
+    const status = err.response?.status
+    if (status === 400 || status === 401) {
       throw new MendeleyForbiddenError('Mendeley token request unauthorized')
     }
     throw OError.tag(err, 'error requesting Mendeley token')
