@@ -76,6 +76,10 @@ The code in this repository is released under the GNU AFFERO GENERAL PUBLIC LICE
 - Copyright (c) Overleaf, 2014-2025.
 - Copyright (c) [Pro Authors](https://overleaf-pro.ayaka.space/on-premises/readme/features-and-copyright), 2026-now.
 
+## Sponsor
+- [OpenAI Codex OSS](https://openai.com/en/form/codex-for-oss/)
+- [GitBook](https://www.gitbook.com/)
+
 ## Star History
 
 <a href="https://www.star-history.com/?repos=ayaka-notes%2Fayakaleaf-pro&type=date&legend=top-left">
