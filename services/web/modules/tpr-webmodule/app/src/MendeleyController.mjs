@@ -2,7 +2,11 @@ import crypto from 'node:crypto'
 import logger from '@overleaf/logger'
 import SessionManager from '../../../../app/src/Features/Authentication/SessionManager.mjs'
 import MendeleyApiClient from './MendeleyApiClient.mjs'
-import { MendeleyForbiddenError } from './MendeleyApiClient.mjs'
+import {
+  MendeleyAccountNotLinkedError,
+  MendeleyExpiredError,
+  MendeleyForbiddenError,
+} from './MendeleyApiClient.mjs'
 
 /**
  * GET /mendeley/groups
@@ -14,7 +18,13 @@ async function getGroups(req, res) {
     const groups = await MendeleyApiClient.getGroupsForUser(userId)
     res.json({ groups })
   } catch (err) {
-    if (err instanceof MendeleyForbiddenError) {
+    // _authHeaders refreshes the token before the request, so an expired or
+    // unlinked account surfaces here rather than as an API 401/403.
+    if (
+      err instanceof MendeleyForbiddenError ||
+      err instanceof MendeleyExpiredError ||
+      err instanceof MendeleyAccountNotLinkedError
+    ) {
       return res.status(403).json({
         error: 'forbidden',
         message: 'mendeley_groups_relink',

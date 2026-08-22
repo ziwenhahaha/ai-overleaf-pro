@@ -76,10 +76,16 @@ function MendeleyCreateFilePane() {
         setGroups(data.groups || [])
         setLoadingGroups(false)
       })
-      .catch(() => {
+      .catch(err => {
         if (cancelled) return
 
-        setGroupsError(t('mendeley_groups_loading_error'))
+        // The server answers 403 when the stored credentials no longer work,
+        // which the user can only fix by relinking.
+        setGroupsError(
+          err?.response?.status === 403
+            ? t('mendeley_groups_relink')
+            : t('mendeley_groups_loading_error')
+        )
         setLoadingGroups(false)
       })
 
