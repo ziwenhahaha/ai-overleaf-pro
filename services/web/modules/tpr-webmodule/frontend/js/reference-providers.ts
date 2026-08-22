@@ -63,3 +63,12 @@ export function getReferenceProvider(
   }
   return undefined
 }
+
+/** Only the importer may refresh; the backend enforces the same rule. */
+export function isOriginalImporter(
+  file: BinaryFile<keyof LinkedFileData>,
+  userId: string | null | undefined
+): boolean {
+  const importedByUserId = (file.linkedFileData as any)?.importedByUserId
+  return Boolean(importedByUserId && userId && importedByUserId === userId)
+}

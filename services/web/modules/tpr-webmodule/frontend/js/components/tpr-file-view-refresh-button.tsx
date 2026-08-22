@@ -5,7 +5,8 @@ import type {
   LinkedFileData,
 } from '@/features/file-view/types/binary-file'
 import useInstanceFeatures from '@modules/instance-features/frontend/js/use-instance-features'
-import { getReferenceProvider } from '../reference-providers'
+import { useUserContext } from '@/shared/context/user-context'
+import { getReferenceProvider, isOriginalImporter } from '../reference-providers'
 
 type TPRFileViewRefreshButtonProps = {
   file: LinkedFile<keyof LinkedFileData>
@@ -27,6 +28,7 @@ export function TPRFileViewRefreshButton({
 }: TPRFileViewRefreshButtonProps) {
   const { t } = useTranslation()
   const features = useInstanceFeatures()
+  const user = useUserContext()
 
   const provider = getReferenceProvider(file)
 
@@ -36,8 +38,7 @@ export function TPRFileViewRefreshButton({
     return null
   }
 
-  const importedByUserId = (file.linkedFileData as any)?.importedByUserId
-  const disabled = provider ? !importedByUserId : false
+  const disabled = provider ? !isOriginalImporter(file, user.id) : false
 
   return (
     <OLButton

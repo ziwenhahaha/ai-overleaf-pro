@@ -8,6 +8,7 @@ import { ZoteroForbiddenError, ZoteroAccountNotLinkedError } from './ZoteroApiCl
 
 const {
   AccessDeniedError,
+  NotOriginalImporterError,
   RemoteServiceError,
 } = LinkedFilesErrors
 
@@ -68,6 +69,11 @@ async function refreshLinkedFile(
     { projectId, userId, groupId: linkedFileData.zoteroGroupId },
     'refreshing Zotero linked file'
   )
+
+  // Refresh runs on the importer's credentials, so only they can trigger it.
+  if (String(linkedFileData.importedByUserId) !== String(userId)) {
+    throw new NotOriginalImporterError('not the original importer')
+  }
 
   const bibtex = await _getBibtex(linkedFileData)
 
