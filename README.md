@@ -1,3 +1,7 @@
+<h1 align="center">
+  <br>
+  <a href="https://overleaf-pro.ayaka.space"><img src="doc/logo.png" alt="Ayakaleaf Pro" width="300"></a>
+</h1>
 
 <h4 align="center">Overleaf Community Edition enhanced with all Pro features <br/>(open source, free to use, self-hostable).</h4>
 
