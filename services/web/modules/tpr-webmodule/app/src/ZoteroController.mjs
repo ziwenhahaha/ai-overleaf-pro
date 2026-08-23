@@ -1,7 +1,10 @@
 import logger from '@overleaf/logger'
 import SessionManager from '../../../../app/src/Features/Authentication/SessionManager.mjs'
 import ZoteroApiClient from './ZoteroApiClient.mjs'
-import { ZoteroForbiddenError } from './ZoteroApiClient.mjs'
+import {
+  ZoteroAccountNotLinkedError,
+  ZoteroForbiddenError,
+} from './ZoteroApiClient.mjs'
 
 /**
  * GET /zotero/groups
@@ -13,7 +16,10 @@ async function getGroups(req, res) {
     const groups = await ZoteroApiClient.getGroupsForUser(userId)
     res.json({ groups })
   } catch (err) {
-    if (err instanceof ZoteroForbiddenError) {
+    if (
+      err instanceof ZoteroForbiddenError ||
+      err instanceof ZoteroAccountNotLinkedError
+    ) {
       return res.status(403).json({
         error: 'forbidden',
         message: 'zotero_groups_relink',

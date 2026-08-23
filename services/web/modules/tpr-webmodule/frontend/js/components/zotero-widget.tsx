@@ -139,7 +139,10 @@ function ZoteroWidgetInner() {
 }
 
 // Hide the Zotero linking widget when Zotero is disabled on this instance.
-export default function ZoteroWidget() {
+// Named (not default) export: settings' linking-section keys each widget by
+// `Object.keys(importObject)[0]`, which would collide on 'default' once a
+// second reference manager is registered.
+export function ZoteroWidget() {
   const { zotero } = useInstanceFeatures()
   if (!zotero) {
     return null

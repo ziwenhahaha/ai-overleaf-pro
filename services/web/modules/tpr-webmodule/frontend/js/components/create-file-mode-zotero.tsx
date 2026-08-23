@@ -76,10 +76,16 @@ function ZoteroCreateFilePane() {
         setGroups(data.groups || [])
         setLoadingGroups(false)
       })
-      .catch(() => {
+      .catch(err => {
         if (cancelled) return
 
-        setGroupsError(t('zotero_groups_loading_error'))
+        // The server answers 403 when the stored credentials no longer work,
+        // which the user can only fix by relinking.
+        setGroupsError(
+          err?.response?.status === 403
+            ? t('zotero_groups_relink')
+            : t('zotero_groups_loading_error')
+        )
         setLoadingGroups(false)
       })
 
