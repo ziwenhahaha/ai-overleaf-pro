@@ -11,6 +11,16 @@ const TIMEOUT_MS = Number(process.env.CLAUDE_BRIDGE_TIMEOUT_MS || 180_000)
 const MAX_REQUEST_BYTES = 256 * 1024
 const MAX_OUTPUT_BYTES = 4 * 1024 * 1024
 
+const isLoopbackHost =
+  HOST === '127.0.0.1' || HOST === '::1' || HOST === 'localhost'
+
+if (!TOKEN && !isLoopbackHost) {
+  console.error(
+    'CLAUDE_BRIDGE_TOKEN is required when the bridge binds beyond localhost.'
+  )
+  process.exit(1)
+}
+
 function sendJson(res, statusCode, payload) {
   const body = JSON.stringify(payload)
   res.writeHead(statusCode, {
@@ -85,6 +95,7 @@ function runClaude({ prompt, systemPrompt, sessionId, resume }) {
   return new Promise((resolve, reject) => {
     const args = [
       '-p',
+      '--bare',
       '--output-format',
       'json',
       '--permission-mode',
@@ -244,9 +255,4 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`Claude Code bridge listening on http://${HOST}:${PORT}`)
-  if (!TOKEN) {
-    console.warn(
-      'WARNING: CLAUDE_BRIDGE_TOKEN is empty. Configure a token before binding beyond localhost.'
-    )
-  }
 })
