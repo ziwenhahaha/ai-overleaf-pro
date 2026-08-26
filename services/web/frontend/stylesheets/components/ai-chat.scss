@@ -98,7 +98,7 @@
 }
 
 .ai-chat-message-user .ai-chat-message-content {
-  background: color-mix(in srgb, var(--bs-primary) 12%, var(--bs-body-bg));
+  border-color: var(--bs-primary);
 }
 
 .ai-chat-thinking {
