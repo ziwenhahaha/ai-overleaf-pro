@@ -1,12 +1,20 @@
-import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  FormEvent,
+  KeyboardEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import RailPanelHeader from '@/features/ide-react/components/rail/rail-panel-header'
 import { postJSON } from '@/infrastructure/fetch-json'
+import MaterialIcon from '@/shared/components/material-icon'
 import OLIconButton from '@/shared/components/ol/ol-icon-button'
 import { useIdeContext } from '@/shared/context/ide-context'
 import { useProjectContext } from '@/shared/context/project-context'
 
-const MAX_CONTEXT_DOCUMENT_LENGTH = 120_000
-const MAX_CONTEXT_SELECTION_LENGTH = 20_000
+const MAX_CONTEXT_DOCUMENT_LENGTH = 60_000
+const MAX_CONTEXT_SELECTION_LENGTH = 12_000
 
 type AiMessage = {
   id: string
@@ -125,11 +133,11 @@ export default function AiChatPane() {
         setSessionId(result.sessionId)
       }
     } catch (requestError: any) {
-      const message =
+      const requestErrorMessage =
         requestError?.data?.error ||
         requestError?.message ||
         'Claude Code request failed.'
-      setError(message)
+      setError(requestErrorMessage)
     } finally {
       setSending(false)
     }
@@ -153,7 +161,10 @@ export default function AiChatPane() {
         title={
           <span className="ai-chat-title">
             Claude Code
-            <span className="ai-chat-status" title="Uses the Claude Code login on the server host">
+            <span
+              className="ai-chat-status"
+              title="Uses the Claude Code login on the server host"
+            >
               local
             </span>
           </span>
@@ -172,12 +183,15 @@ export default function AiChatPane() {
       <div className="ai-chat-messages" aria-live="polite">
         {messages.length === 0 && (
           <div className="ai-chat-empty-state">
-            <span className="material-symbols unfilled ai-chat-empty-icon" aria-hidden="true">
-              smart_toy
-            </span>
+            <MaterialIcon
+              type="smart_toy"
+              unfilled
+              className="ai-chat-empty-icon"
+            />
             <strong>Ask Claude about this paper</strong>
             <p>
-              The current LaTeX file and selected text are attached automatically.
+              The current LaTeX file and selected text are attached
+              automatically.
             </p>
           </div>
         )}
@@ -198,7 +212,10 @@ export default function AiChatPane() {
           <div className="ai-chat-message ai-chat-message-assistant">
             <div className="ai-chat-message-role">Claude</div>
             <div className="ai-chat-thinking">
-              <span className="spinner-border spinner-border-sm" aria-hidden="true" />
+              <span
+                className="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              />
               Thinking…
             </div>
           </div>
