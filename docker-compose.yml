@@ -12,6 +12,10 @@ services:
         condition: service_started
     ports:
       - 80:80
+    extra_hosts:
+      # Lets the Overleaf container reach the Claude Code bridge running on
+      # the Docker host while keeping Claude Code authentication on the host.
+      - "host.docker.internal:host-gateway"
     stop_grace_period: 60s
     volumes:
       - ~/sharelatex_data:/var/lib/overleaf
@@ -29,6 +33,11 @@ services:
       # different locations
       OVERLEAF_REDIS_HOST: redis
       REDIS_HOST: redis
+
+      # Claude Code AI sidebar. The bridge itself runs on the Docker host under
+      # the same Unix user that is logged in with `claude auth login`.
+      OVERLEAF_AI_CLAUDE_BRIDGE_URL: ${OVERLEAF_AI_CLAUDE_BRIDGE_URL:-http://host.docker.internal:17891}
+      OVERLEAF_AI_CLAUDE_BRIDGE_TOKEN: ${CLAUDE_BRIDGE_TOKEN:-}
 
       # IMPORTANT: Required for invite token generation
       # OVERLEAF_INVITE_TOKEN_SECRET: generate with `openssl rand -base64 32`
