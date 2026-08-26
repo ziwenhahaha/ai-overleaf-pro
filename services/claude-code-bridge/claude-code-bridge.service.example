@@ -1,0 +1,20 @@
+[Unit]
+Description=AI Overleaf Claude Code Bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=YOUR_LINUX_USER
+WorkingDirectory=/path/to/ai-overleaf-pro
+EnvironmentFile=/etc/ai-overleaf-claude-bridge.env
+ExecStart=/usr/bin/env node services/claude-code-bridge/server.mjs
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target
