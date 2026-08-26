@@ -14,7 +14,7 @@ Browser
 
 The bridge should run as the same Unix user that authenticated Claude Code. Claude credentials stay on the host and are never copied into the Overleaf container.
 
-The initial AI Chat integration is intentionally read-only. It invokes Claude Code with `--permission-mode plan`, `--tools ""`, and `--disallowedTools "mcp__*"`. The current LaTeX document and selection are supplied by the editor as context.
+The initial AI Chat integration is intentionally read-only and isolated from the host user's normal Claude Code workspace configuration. It invokes Claude Code with `--bare`, `--permission-mode plan`, `--tools ""`, and `--disallowedTools "mcp__*"`. This keeps the web chat from loading project `CLAUDE.md` files, hooks, skills, plugins, MCP servers, or local tool access. The current LaTeX document and selection are supplied explicitly by the editor as context.
 
 ## 1. Verify Claude Code on the host
 
@@ -42,6 +42,8 @@ echo "$CLAUDE_BRIDGE_TOKEN"
 ```
 
 Save this value in a root-readable or service-user-readable environment file. The same value must be visible to Docker Compose as `CLAUDE_BRIDGE_TOKEN`.
+
+The bridge refuses to bind to a non-loopback address unless `CLAUDE_BRIDGE_TOKEN` is configured.
 
 ## 3. Start the bridge on the host
 
@@ -135,7 +137,7 @@ sudo systemctl status claude-code-bridge
 | `CLAUDE_WORKDIR` | bridge process cwd | Working directory used by Claude Code |
 | `CLAUDE_BRIDGE_HOST` | `127.0.0.1` | Listen address |
 | `CLAUDE_BRIDGE_PORT` | `17891` | Listen port |
-| `CLAUDE_BRIDGE_TOKEN` | empty | Bearer token shared with Overleaf |
+| `CLAUDE_BRIDGE_TOKEN` | empty on loopback only | Bearer token shared with Overleaf |
 | `CLAUDE_BRIDGE_TIMEOUT_MS` | `180000` | Claude process timeout |
 | `OVERLEAF_AI_CLAUDE_BRIDGE_URL` | `http://host.docker.internal:17891` in Compose | Bridge URL used by Overleaf |
 | `OVERLEAF_AI_CLAUDE_BRIDGE_TOKEN` | value of `CLAUDE_BRIDGE_TOKEN` in Compose | Bearer token sent by Overleaf |
