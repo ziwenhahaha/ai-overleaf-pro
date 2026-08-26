@@ -37,7 +37,11 @@ function readJsonBody(req) {
     req.on('data', chunk => {
       bytes += Buffer.byteLength(chunk)
       if (bytes > MAX_REQUEST_BYTES) {
-        reject(Object.assign(new Error('Request body is too large'), { statusCode: 413 }))
+        reject(
+          Object.assign(new Error('Request body is too large'), {
+            statusCode: 413,
+          })
+        )
         req.destroy()
         return
       }
@@ -47,7 +51,9 @@ function readJsonBody(req) {
       try {
         resolve(body ? JSON.parse(body) : {})
       } catch {
-        reject(Object.assign(new Error('Invalid JSON body'), { statusCode: 400 }))
+        reject(
+          Object.assign(new Error('Invalid JSON body'), { statusCode: 400 })
+        )
       }
     })
     req.on('error', reject)
@@ -66,7 +72,9 @@ function extractReply(data) {
   }
   if (Array.isArray(data?.content)) {
     return data.content
-      .filter(item => item && item.type === 'text' && typeof item.text === 'string')
+      .filter(
+        item => item && item.type === 'text' && typeof item.text === 'string'
+      )
       .map(item => item.text)
       .join('\n')
   }
@@ -81,6 +89,10 @@ function runClaude({ prompt, systemPrompt, sessionId, resume }) {
       'json',
       '--permission-mode',
       'plan',
+      '--tools',
+      '',
+      '--disallowedTools',
+      'mcp__*',
       '--no-chrome',
       '--disable-slash-commands',
     ]
@@ -117,11 +129,14 @@ function runClaude({ prompt, systemPrompt, sessionId, resume }) {
     const resolveOnce = finish(resolve)
     const rejectOnce = finish(reject)
 
-    const timer = setTimeout(() => {
-      child.kill('SIGTERM')
-      setTimeout(() => child.kill('SIGKILL'), 2_000).unref()
-      rejectOnce(new Error('Claude Code timed out'))
-    }, Number.isFinite(TIMEOUT_MS) ? TIMEOUT_MS : 180_000)
+    const timer = setTimeout(
+      () => {
+        child.kill('SIGTERM')
+        setTimeout(() => child.kill('SIGKILL'), 2_000).unref()
+        rejectOnce(new Error('Claude Code timed out'))
+      },
+      Number.isFinite(TIMEOUT_MS) ? TIMEOUT_MS : 180_000
+    )
 
     child.stdout.setEncoding('utf8')
     child.stderr.setEncoding('utf8')
@@ -163,7 +178,8 @@ function runClaude({ prompt, systemPrompt, sessionId, resume }) {
       if (code !== 0) {
         rejectOnce(
           new Error(
-            stderr.trim() || `Claude Code exited with status ${code ?? 'unknown'}`
+            stderr.trim() ||
+              `Claude Code exited with status ${code ?? 'unknown'}`
           )
         )
         return
@@ -204,7 +220,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   try {
-    const { prompt, systemPrompt, sessionId, resume = false } = await readJsonBody(req)
+    const { prompt, systemPrompt, sessionId, resume = false } =
+      await readJsonBody(req)
     if (typeof prompt !== 'string' || !prompt.trim()) {
       sendJson(res, 400, { error: 'Prompt is required' })
       return
