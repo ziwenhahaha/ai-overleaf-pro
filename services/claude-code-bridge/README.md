@@ -98,8 +98,8 @@ Each request automatically includes:
 
 - project name;
 - current document name;
-- selected LaTeX text, when present;
-- current document contents, capped at 120,000 characters;
+- selected LaTeX text, when present, capped at 12,000 characters;
+- current document contents, capped at 60,000 characters;
 - the current Claude Code session ID for follow-up turns.
 
 The trash button starts a new Claude conversation.
@@ -114,6 +114,8 @@ Example `/etc/ai-overleaf-claude-bridge.env`:
 CLAUDE_BRIDGE_HOST=0.0.0.0
 CLAUDE_BRIDGE_PORT=17891
 CLAUDE_BRIDGE_TOKEN=replace-with-a-random-token
+# If `claude` is outside systemd's PATH, set the absolute executable path:
+# CLAUDE_BIN=/home/YOUR_LINUX_USER/.local/bin/claude
 ```
 
 Then:
