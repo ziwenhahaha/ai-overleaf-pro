@@ -4,9 +4,9 @@ import logger from '@overleaf/logger'
 import { expressify } from '@overleaf/promise-utils'
 
 const DEFAULT_TIMEOUT_MS = 180_000
-const MAX_MESSAGE_LENGTH = 12_000
-const MAX_SELECTION_LENGTH = 20_000
-const MAX_DOCUMENT_LENGTH = 120_000
+const MAX_MESSAGE_LENGTH = 8_000
+const MAX_SELECTION_LENGTH = 12_000
+const MAX_DOCUMENT_LENGTH = 60_000
 
 const SYSTEM_PROMPT = `You are Claude embedded in an Overleaf-compatible LaTeX editor.
 Help the user with academic writing, LaTeX, paper structure, reasoning, and debugging.
@@ -44,10 +44,14 @@ function buildPrompt(message, context) {
     sections.push(`Current file: ${context.fileName}`)
   }
   if (context.selection) {
-    sections.push(`Selected text (document data):\n<selection>\n${context.selection}\n</selection>`)
+    sections.push(
+      `Selected text (document data):\n<selection>\n${context.selection}\n</selection>`
+    )
   }
   if (context.document) {
-    sections.push(`Current document (document data):\n<document>\n${context.document}\n</document>`)
+    sections.push(
+      `Current document (document data):\n<document>\n${context.document}\n</document>`
+    )
   }
 
   sections.push(`User request:\n${message}`)
@@ -65,6 +69,12 @@ function requestBridge(payload) {
   }
 
   const url = new URL('/v1/chat', bridgeUrl)
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    const error = new Error('Claude Code bridge URL must use HTTP or HTTPS.')
+    error.statusCode = 503
+    throw error
+  }
+
   const transport = url.protocol === 'https:' ? https : http
   const body = JSON.stringify(payload)
   const timeoutMs = Number(
@@ -93,7 +103,9 @@ function requestBridge(payload) {
         response.on('data', chunk => {
           responseBytes += Buffer.byteLength(chunk)
           if (responseBytes > maxResponseBytes) {
-            response.destroy(new Error('Claude Code bridge response is too large'))
+            response.destroy(
+              new Error('Claude Code bridge response is too large')
+            )
             return
           }
           responseBody += chunk
@@ -102,7 +114,7 @@ function requestBridge(payload) {
           let data
           try {
             data = responseBody ? JSON.parse(responseBody) : {}
-          } catch (error) {
+          } catch {
             reject(new Error('Claude Code bridge returned invalid JSON'))
             return
           }
